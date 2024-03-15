@@ -1,0 +1,64 @@
+recursion
+  - recursion
+  - factorial
+  - fibonacci
+  - towers of hanoi
+  - euclidean
+
+search
+  - linear search
+  - binary 
+
+selection
+  - quickselect
+  - median of median, introselect
+  - online selection
+  - secretary problem
+
+bit manipulation
+  - binary representation
+  - russian peasant problem
+
+backtracking
+  - bruth-force
+  - N-queen
+  - Hamiltonian
+  - Coloring problem
+  - Knight's tour
+  - Maze problem
+  - Sudoku
+
+Dynamic programming
+  - fibonacci
+  - knapsack
+  - rod cutting
+  - subset sum
+  - maximum subarray
+  - longest common subsequence
+
+Optimal packing
+  - bin packing
+
+Divide and Conquer
+  - binary search
+  - merge sort
+  - closest pair
+  
+Substring search
+  - Bruth-force
+  - Rabin-Karp
+  - Partial match table
+  - Knuth-Morris-Pratt
+  - Z algorithm
+
+Interview Questions
+  - reverse array
+  - palindrome
+  - interger reversion
+  - anagram
+  - dutch nation flag
+  - trapping rain water
+
+https://play.google.com/store/apps/details?id=com.globalsoftwaresupport.algorithmsapp&hl=en
+Algorhyme app
+
