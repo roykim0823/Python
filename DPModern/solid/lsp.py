@@ -26,8 +26,8 @@ class Rectangle:
     def height(self, value):
         self._height = value
 
-
-class Square(Rectangle):
+# https://medium.com/@alex24dutertre/square-rectangle-and-the-liskov-substitution-principle-ee1eb8433106
+class Square(Rectangle):  # break LSP -> Solution: 1) Use bool for sqaure or not 2) Use factory method
     def __init__(self, size):
         Rectangle.__init__(self, size, size)
 

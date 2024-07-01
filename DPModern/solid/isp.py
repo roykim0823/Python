@@ -37,6 +37,7 @@ class OldFashionedPrinter(Machine):
         raise NotImplementedError('Printer cannot scan!')
 
 
+# ISP Pattern
 class Printer:
     @abstractmethod
     def print(self, document): pass
