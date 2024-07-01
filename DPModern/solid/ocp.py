@@ -20,7 +20,7 @@ class Product:
         self.size = size
 
 
-class ProductFilter:
+class ProductFilter:  # break OCP
     def filter_by_color(self, products, color):
         for p in products:
             if p.color == color: yield p
@@ -35,18 +35,19 @@ class ProductFilter:
                 yield p
 
     # state space explosion
-    # 3 criteria
+    # 3 criteria : + weight
     # c s w cs sw cw csw = 7 methods
 
     # OCP = open for extension, closed for modification
 
 
-class Specification:
+# OCP Design
+class Specification:  # interface
     def is_satisfied(self, item):
-        pass
+        pass  # should be overriden by the inherited class
 
-    # and operator makes life easier
-    def __and__(self, other):
+    # and operator makes life easier (&)
+    def __and__(self, other):  # binary and operator can be ovrriden, but "and" operator
         return AndSpecification(self, other)
 
 
@@ -54,7 +55,7 @@ class Filter:
     def filter(self, items, spec):
         pass
 
-
+# Implement the extension
 class ColorSpecification(Specification):
     def __init__(self, color):
         self.color = color
@@ -116,6 +117,7 @@ print('Green products (new):')
 green = ColorSpecification(Color.GREEN)
 for p in bf.filter(products, green):
     print(f' - {p.name} is green')
+print()
 
 print('Large products:')
 large = SizeSpecification(Size.LARGE)
@@ -124,6 +126,6 @@ for p in bf.filter(products, large):
 
 print('Large blue items:')
 # large_blue = AndSpecification(large, ColorSpecification(Color.BLUE))
-large_blue = large & ColorSpecification(Color.BLUE)
+large_blue = large & ColorSpecification(Color.BLUE)  # Python does not allow overriding 'and' operator
 for p in bf.filter(products, large_blue):
     print(f' - {p.name} is large and blue')

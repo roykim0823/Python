@@ -14,6 +14,7 @@ class Journal:
         return "\n".join(self.entries)
 
     # break SRP
+    # ---------------------------------
     def save(self, filename):
         file = open(filename, "w")
         file.write(str(self))
@@ -24,9 +25,10 @@ class Journal:
 
     def load_from_web(self, uri):
         pass
-
+    # ---------------------------------
 
 class PersistenceManager:
+    @staticmethod
     def save_to_file(journal, filename):
         file = open(filename, "w")
         file.write(str(journal))
@@ -39,7 +41,7 @@ j.add_entry("I ate a bug.")
 print(f"Journal entries:\n{j}\n")
 
 p = PersistenceManager()
-file = r'c:\temp\journal.txt'
+file = 'journal.txt'
 p.save_to_file(j, file)
 
 # verify!
