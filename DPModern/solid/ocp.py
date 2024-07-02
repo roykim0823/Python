@@ -20,36 +20,14 @@ class Product:
         self.size = size
 
 
-class ProductFilter:  # break OCP
-    def filter_by_color(self, products, color):
-        for p in products:
-            if p.color == color: yield p
-
-    def filter_by_size(self, products, size):
-        for p in products:
-            if p.size == size: yield p
-
-    def filter_by_size_and_color(self, products, size, color):
-        for p in products:
-            if p.color == color and p.size == size:
-                yield p
-
-    # state space explosion
-    # 3 criteria : + weight
-    # c s w cs sw cw csw = 7 methods
-
-    # OCP = open for extension, closed for modification
-
-
 # OCP Design
-class Specification:  # interface
+class Specification:  # Interface
     def is_satisfied(self, item):
         pass  # should be overriden by the inherited class
 
     # and operator makes life easier (&)
     def __and__(self, other):  # binary and operator can be ovrriden, but "and" operator
         return AndSpecification(self, other)
-
 
 class Filter:
     def filter(self, items, spec):
@@ -72,14 +50,14 @@ class SizeSpecification(Specification):
         return item.size == self.size
 
 
-# class AndSpecification(Specification):
-#     def __init__(self, spec1, spec2):
-#         self.spec2 = spec2
-#         self.spec1 = spec1
-#
-#     def is_satisfied(self, item):
-#         return self.spec1.is_satisfied(item) and \
-#                self.spec2.is_satisfied(item)
+class AndSpecification1(Specification):
+    def __init__(self, spec1, spec2):
+        self.spec2 = spec2
+        self.spec1 = spec1
+
+    def is_satisfied(self, item):
+        return self.spec1.is_satisfied(item) and \
+               self.spec2.is_satisfied(item)
 
 class AndSpecification(Specification):
     def __init__(self, *args):
@@ -103,14 +81,6 @@ house = Product('House', Color.BLUE, Size.LARGE)
 
 products = [apple, tree, house]
 
-pf = ProductFilter()
-print('Green products (old):')
-for p in pf.filter_by_color(products, Color.GREEN):
-    print(f' - {p.name} is green')
-
-# ^ BEFORE
-
-# v AFTER
 bf = BetterFilter()
 
 print('Green products (new):')
@@ -125,7 +95,7 @@ for p in bf.filter(products, large):
     print(f' - {p.name} is large')
 
 print('Large blue items:')
-# large_blue = AndSpecification(large, ColorSpecification(Color.BLUE))
-large_blue = large & ColorSpecification(Color.BLUE)  # Python does not allow overriding 'and' operator
-for p in bf.filter(products, large_blue):
+large_blue1 = AndSpecification(large, ColorSpecification(Color.BLUE))
+large_blue2 = large & ColorSpecification(Color.BLUE)  # Python does not allow overriding 'and' operator
+for p in bf.filter(products, large_blue2):
     print(f' - {p.name} is large and blue')

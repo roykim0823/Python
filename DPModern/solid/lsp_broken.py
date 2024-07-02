@@ -16,8 +16,6 @@ class Rectangle:
 
     @width.setter
     def width(self, value):
-        if self.is_square():
-            raise RuntimeError("Set width is not allowed in a square.")
         self._width = value
 
     @property
@@ -26,21 +24,20 @@ class Rectangle:
 
     @height.setter
     def height(self, value):
-        if self.is_square():
-            raise RuntimeError("Set height is not allowed in a sqaure.")
         self._height = value
 
-    # to detect squre
-    def is_square(self):
-        return self._width == self._height
+# https://medium.com/@alex24dutertre/square-rectangle-and-the-liskov-substitution-principle-ee1eb8433106
+class Square(Rectangle):  # break LSP -> Solution: 1) Use bool for sqaure or not 2) Use factory method
+    def __init__(self, size):
+        Rectangle.__init__(self, size, size)
 
-    class Factory:
-        @staticmethod
-        def create_rectangle(x, y):
-            return Rectangle(x, y)
-        @staticmethod
-        def create_square(size):
-            return Rectangle(size, size)
+    @Rectangle.width.setter
+    def width(self, value):
+        _width = _height = value
+
+    @Rectangle.height.setter
+    def height(self, value):
+        _width = _height = value
 
 
 def use_it(rc):
@@ -50,8 +47,8 @@ def use_it(rc):
     print(f'Expected an area of {expected}, got {rc.area}')
 
 
-rc = Rectangle.Factory.create_rectangle(2, 3)
+rc = Rectangle(2, 3)
 use_it(rc)
 
-sq = Rectangle.Factory.create_square(5)
+sq = Square(5)
 use_it(sq)

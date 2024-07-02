@@ -13,23 +13,27 @@ class Journal:
     def __str__(self):
         return "\n".join(self.entries)
 
-# Separation of Concern
-class PersistenceManager:
-    @staticmethod
-    def save_to_file(journal, filename):
+    # SRP broken!
+    def save(self, filename):
         file = open(filename, "w")
-        file.write(str(journal))
+        file.write(str(self))
         file.close()
 
+    # SRP broken!
+    def load(self, filename):
+        pass
+
+    # SRP broken!
+    def load_from_web(self, uri):
+        pass
 
 j = Journal()
 j.add_entry("I cried today.")
 j.add_entry("I ate a bug.")
 print(f"Journal entries:\n{j}\n")
 
-p = PersistenceManager()
-file = 'journal.txt'
-p.save_to_file(j, file)
+file = 'journal_srp_broken.txt'
+j.save(file)
 
 # verify!
 with open(file) as fh:
